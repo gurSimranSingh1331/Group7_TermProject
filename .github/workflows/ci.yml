@@ -1,0 +1,37 @@
+name: CI Workflow
+
+# Trigger the workflow on push and pull request events
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  lint_and_test:
+    runs-on: windows-latest  # Specify that the job runs on Windows
+
+    steps:
+      # Checkout the repository code
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Set up Node.js environment (replace with your environment if needed)
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'  # Use the version of Node.js your project requires
+
+      # Install project dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # Run ESLint (code linting)
+      - name: Run ESLint
+        run: npm run lint
+
+      # Run tests (assumes you have a test script defined in package.json)
+      - name: Run tests
+        run: npm test
